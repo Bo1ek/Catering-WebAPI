@@ -4,6 +4,7 @@ using Catering_WebAPI.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Catering_WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Catering_WebAPI.Controllers
 {
@@ -18,7 +19,7 @@ namespace Catering_WebAPI.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public async Task<ActionResult<List<Customer>>> GetAllCustomers()
         {
             var customers = await _context.Customers.ToListAsync();
@@ -26,7 +27,7 @@ namespace Catering_WebAPI.Controllers
             return Ok(customers);
         }
 
-        [HttpGet("{id}", Name= "GetCustomer")]
+        [HttpGet("{id}", Name= "GetCustomer"), Authorize]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
@@ -35,7 +36,7 @@ namespace Catering_WebAPI.Controllers
 
             return Ok(customer);
         }
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<ActionResult<List<Customer>>> AddCustomer(Customer customer)
         {
              _context.Customers.Add(customer);
@@ -43,7 +44,7 @@ namespace Catering_WebAPI.Controllers
 
             return Ok(await _context.Customers.ToListAsync());
         }
-        [HttpPut]
+        [HttpPut, Authorize]
         public async Task<ActionResult<List<Customer>>> UpdateCustomer(Customer updatedCustomer)
         {
             var dbCustomer = await _context.Customers.FindAsync(updatedCustomer.CustomerId);
@@ -59,7 +60,7 @@ namespace Catering_WebAPI.Controllers
 
             return CreatedAtRoute("GetCustomer", new { id = dbCustomer.CustomerId}, dbCustomer);
         }
-        [HttpDelete]
+        [HttpDelete, Authorize]
         public async Task<ActionResult<List<Customer>>> DeleteCustomer(int id)
         {
             var dbCustomer = await _context.Customers.FindAsync(id);
