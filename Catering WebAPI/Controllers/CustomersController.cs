@@ -10,6 +10,7 @@ namespace Catering_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CustomersController : ControllerBase
     {
         private readonly DataContext _context;
@@ -19,7 +20,7 @@ namespace Catering_WebAPI.Controllers
             _context = context;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public async Task<ActionResult<List<Customer>>> GetAllCustomers()
         {
             var customers = await _context.Customers.ToListAsync();
@@ -27,7 +28,7 @@ namespace Catering_WebAPI.Controllers
             return Ok(customers);
         }
 
-        [HttpGet("{id}", Name= "GetCustomer"), Authorize]
+        [HttpGet("{id}", Name= "GetCustomer")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
@@ -36,7 +37,7 @@ namespace Catering_WebAPI.Controllers
 
             return Ok(customer);
         }
-        [HttpPost, Authorize]
+        [HttpPost]
         public async Task<ActionResult<List<Customer>>> AddCustomer(Customer customer)
         {
              _context.Customers.Add(customer);
@@ -44,7 +45,7 @@ namespace Catering_WebAPI.Controllers
 
             return Ok(await _context.Customers.ToListAsync());
         }
-        [HttpPut, Authorize]
+        [HttpPut]
         public async Task<ActionResult<List<Customer>>> UpdateCustomer(Customer updatedCustomer)
         {
             var dbCustomer = await _context.Customers.FindAsync(updatedCustomer.CustomerId);
@@ -60,7 +61,7 @@ namespace Catering_WebAPI.Controllers
 
             return CreatedAtRoute("GetCustomer", new { id = dbCustomer.CustomerId}, dbCustomer);
         }
-        [HttpDelete, Authorize]
+        [HttpDelete]
         public async Task<ActionResult<List<Customer>>> DeleteCustomer(int id)
         {
             var dbCustomer = await _context.Customers.FindAsync(id);
