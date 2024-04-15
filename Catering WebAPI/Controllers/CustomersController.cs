@@ -57,7 +57,7 @@ namespace Catering_WebAPI.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Customers.ToListAsync());
+            return Ok(updatedCustomer);
         }
         [HttpDelete]
         public async Task<ActionResult<List<Customer>>> DeleteCustomer(int id)
@@ -65,9 +65,9 @@ namespace Catering_WebAPI.Controllers
             var dbCustomer = await _context.Customers.FindAsync(id);
             if (dbCustomer is null)
                 return NotFound("Customer not found.");
+
             _context.Customers.Remove(dbCustomer);
             await _context.SaveChangesAsync();
-
 
             return Ok(await _context.Customers.ToListAsync());
         }
