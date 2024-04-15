@@ -18,3 +18,7 @@ Content-Type: application/json
 }
 
 ###
+
+GET {{Catering WebAPI_HostAddress}}/api/customers/0
+
+###

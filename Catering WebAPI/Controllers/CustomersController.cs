@@ -26,7 +26,7 @@ namespace Catering_WebAPI.Controllers
             return Ok(customers);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name= "GetCustomer")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
@@ -57,7 +57,7 @@ namespace Catering_WebAPI.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(updatedCustomer);
+            return CreatedAtRoute("GetCustomer", new { id = dbCustomer.CustomerId}, dbCustomer);
         }
         [HttpDelete]
         public async Task<ActionResult<List<Customer>>> DeleteCustomer(int id)
