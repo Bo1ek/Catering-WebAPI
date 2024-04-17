@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catering_WebAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240415181151_User")]
-    partial class User
+    [Migration("20240417111245_CateringTypes")]
+    partial class CateringTypes
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,25 @@ namespace Catering_WebAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Catering_WebAPI.Entities.CateringType", b =>
+                {
+                    b.Property<int>("CateringTypeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CateringTypeID"));
+
+                    b.Property<int>("CateringDietType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DietType")
+                        .HasColumnType("int");
+
+                    b.HasKey("CateringTypeID");
+
+                    b.ToTable("CateringTypes");
+                });
 
             modelBuilder.Entity("Catering_WebAPI.Entities.Customer", b =>
                 {
@@ -54,6 +73,36 @@ namespace Catering_WebAPI.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Catering_WebAPI.Entities.Order", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"));
+
+                    b.Property<int>("CateringTypesCateringTypeID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Prize")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderID");
+
+                    b.HasIndex("CateringTypesCateringTypeID");
+
+                    b.HasIndex("CustomerID");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -254,6 +303,23 @@ namespace Catering_WebAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Catering_WebAPI.Entities.Order", b =>
+                {
+                    b.HasOne("Catering_WebAPI.Entities.CateringType", "CateringTypes")
+                        .WithMany()
+                        .HasForeignKey("CateringTypesCateringTypeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Catering_WebAPI.Entities.Customer", null)
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CateringTypes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -303,6 +369,11 @@ namespace Catering_WebAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Catering_WebAPI.Entities.Customer", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
