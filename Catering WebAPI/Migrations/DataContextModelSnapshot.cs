@@ -22,21 +22,6 @@ namespace Catering_WebAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CateringTypeOrder", b =>
-                {
-                    b.Property<int>("CateringTypesCateringTypeID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrdersOrderID")
-                        .HasColumnType("int");
-
-                    b.HasKey("CateringTypesCateringTypeID", "OrdersOrderID");
-
-                    b.HasIndex("OrdersOrderID");
-
-                    b.ToTable("CateringTypeOrder");
-                });
-
             modelBuilder.Entity("Catering_WebAPI.Entities.CateringType", b =>
                 {
                     b.Property<int>("CateringTypeID")
@@ -95,17 +80,22 @@ namespace Catering_WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"));
 
+                    b.Property<int>("CateringTypesCateringTypeID")
+                        .HasColumnType("int");
+
                     b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Prize")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderID");
+
+                    b.HasIndex("CateringTypesCateringTypeID");
 
                     b.HasIndex("CustomerID");
 
@@ -310,28 +300,21 @@ namespace Catering_WebAPI.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CateringTypeOrder", b =>
+            modelBuilder.Entity("Catering_WebAPI.Entities.Order", b =>
                 {
-                    b.HasOne("Catering_WebAPI.Entities.CateringType", null)
+                    b.HasOne("Catering_WebAPI.Entities.CateringType", "CateringTypes")
                         .WithMany()
                         .HasForeignKey("CateringTypesCateringTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Catering_WebAPI.Entities.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersOrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Catering_WebAPI.Entities.Order", b =>
-                {
                     b.HasOne("Catering_WebAPI.Entities.Customer", null)
                         .WithMany("Orders")
                         .HasForeignKey("CustomerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CateringTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
