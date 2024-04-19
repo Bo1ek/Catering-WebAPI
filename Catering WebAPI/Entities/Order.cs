@@ -10,7 +10,7 @@ namespace Catering_WebAPI.Entities
         public string Status { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Prize { get; set; }
-        public CateringType CateringTypes { get; set; }
+        public List<CateringType> CateringTypes { get; set; }
 
     }
 }

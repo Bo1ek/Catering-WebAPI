@@ -13,6 +13,7 @@ namespace Catering_WebAPI.Entities
         }
         [EnumDataType(typeof(DietTypes))]
         public DietTypes DietType { get; set; }
+        public List<Order> Orders { get; set; }
     }
     public enum DietTypes
     {
