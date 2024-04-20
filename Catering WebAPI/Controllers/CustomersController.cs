@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Catering_WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Catering_WebAPI.Controllers
 {
@@ -48,7 +49,7 @@ namespace Catering_WebAPI.Controllers
         [HttpPut]
         public async Task<ActionResult<List<Customer>>> UpdateCustomer(Customer updatedCustomer)
         {
-            var dbCustomer = await _context.Customers.FindAsync(updatedCustomer.CustomerId);
+            var dbCustomer = await _context.Customers.FindAsync(updatedCustomer.CustomerID);
             if (dbCustomer is null)
                 return NotFound("Customer not found.");
 
@@ -59,7 +60,7 @@ namespace Catering_WebAPI.Controllers
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtRoute("GetCustomer", new { id = dbCustomer.CustomerId}, dbCustomer);
+            return CreatedAtRoute("GetCustomer", new { id = dbCustomer.CustomerID}, dbCustomer);
         }
         [HttpDelete]
         public async Task<ActionResult<List<Customer>>> DeleteCustomer(int id)

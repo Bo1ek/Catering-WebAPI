@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catering WebAPI", "Catering WebAPI\Catering WebAPI.csproj", "{8CFA91C6-AF1C-45C3-BA06-35835C851F79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catering_WebAPI", "Catering WebAPI\Catering_WebAPI.csproj", "{8CFA91C6-AF1C-45C3-BA06-35835C851F79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
