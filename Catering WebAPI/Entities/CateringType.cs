@@ -4,7 +4,7 @@ namespace Catering_WebAPI.Entities
 {
     public class CateringType
     {
-        public int CateringTypeID { get; set; }
+        public int CateringTypeId { get; set; }
 
         public virtual int CateringDietType
         {
@@ -14,12 +14,5 @@ namespace Catering_WebAPI.Entities
         [EnumDataType(typeof(DietTypes))]
         public DietTypes DietType { get; set; }
         public List<Order> Orders { get; set; }
-    }
-    public enum DietTypes
-    {
-        Keto = 0,
-        Protein = 1,
-        LowCarb = 2,
-        Sport = 3
     }
 }
