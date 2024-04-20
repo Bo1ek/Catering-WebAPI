@@ -12,5 +12,6 @@ namespace Catering_WebAPI.Entities
         public int[] CalorieVariants { get; } = [1700,2000,2300,2600,3000,3500,4000];
         public List<CateringType> CateringTypes { get; set; }
         public List<Order> Orders { get; set; }
+        public List<Order> OrderID { get; set; }
     }
 }
