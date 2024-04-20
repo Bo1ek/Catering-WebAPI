@@ -8,7 +8,7 @@ namespace Catering_WebAPI.Entities
 {
     public class Customer
     {
-        public int CustomerId { get; set; }
+        public int CustomerID { get; set; }
         [MaxLength(20,ErrorMessage = "Name cannot be greater than 20 characters!")]
         [MinLength(3,ErrorMessage = "Name cannot be less than 3 characters!")]
         public required string Name { get; set; }
