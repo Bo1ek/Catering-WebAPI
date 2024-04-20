@@ -1,6 +1,6 @@
 ﻿namespace Catering_WebAPI.Entities
 {
-    public enum DietTypes
+    public enum DietType
     {
         Keto = 0,
         Protein = 1,

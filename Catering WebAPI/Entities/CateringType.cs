@@ -9,10 +9,10 @@ namespace Catering_WebAPI.Entities
         public virtual int CateringDietType
         {
             get => (int)this.DietType;
-            set => DietType = (DietTypes)value;
+            set => DietType = (DietType)value;
         }
-        [EnumDataType(typeof(DietTypes))]
-        public DietTypes DietType { get; set; }
+        [EnumDataType(typeof(DietType))]
+        public DietType DietType { get; set; }
         public List<Order> Orders { get; set; }
     }
 }
